@@ -56,7 +56,7 @@ async def _randomize_message(call: types.CallbackQuery, user: UserTG, config: Co
         pass
 
 
-async def _stop_lottery(call: types.CallbackQuery, user: UserTG, config: Config, has_won: True) -> None:
+async def _stop_lottery(call: types.CallbackQuery, user: UserTG, config: Config, has_won: bool) -> None:
     row = ""
     if has_won:
         row = random.choice(config.misc.icons) * config.misc.row_length
