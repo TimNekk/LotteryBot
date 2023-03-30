@@ -15,9 +15,9 @@ services:
     env_file:
       - ".env"
     depends_on:
-      db:
+      - db:
         condition: service_healthy
-      redis:
+      - redis:
         condition: service_started
     networks:
       - tg_bot
