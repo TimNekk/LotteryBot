@@ -66,7 +66,15 @@ class LogConfig:
 
 @dataclass
 class Miscellaneous:
-    pass
+    total_attempts: int
+    win_chance: float
+    sad_sticker: str
+    sad_sticker2: str
+    max_winners: int
+    icons: str
+    row_length: int
+    spins_count: int
+    time_between_spins: float
 
 
 @dataclass
@@ -111,5 +119,15 @@ def load_config(path: str | None = None) -> Config:
             rotation=datetime.strptime(env.str('LOG_ROTATION'), '%H:%M').time(),
             retention=timedelta(days=env.int('LOG_RETENTION')),
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(
+            total_attempts=env.int('TOTAL_ATTEMPTS'),
+            win_chance=env.float('WIN_CHANCE'),
+            sad_sticker=env.str('SAD_STICKER'),
+            sad_sticker2=env.str('SAD_STICKER2'),
+            max_winners=env.int('MAX_WINNERS'),
+            icons=env.str('ICONS'),
+            row_length=env.int('ROW_LENGTH')
+            spins_count=env.int('SPINS_COUNT')
+            time_between_spins=env.float('TIME_BETWEEN_SPINS')
+        )
     )
