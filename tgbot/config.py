@@ -126,8 +126,8 @@ def load_config(path: str | None = None) -> Config:
             sad_sticker2=env.str('SAD_STICKER2'),
             max_winners=env.int('MAX_WINNERS'),
             icons=env.str('ICONS'),
-            row_length=env.int('ROW_LENGTH')
-            spins_count=env.int('SPINS_COUNT')
+            row_length=env.int('ROW_LENGTH'),
+            spins_count=env.int('SPINS_COUNT'),
             time_between_spins=env.float('TIME_BETWEEN_SPINS')
         )
     )
