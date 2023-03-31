@@ -24,7 +24,11 @@ async def _start_lottery(call: types.CallbackQuery, user: UserTG, state: FSMCont
     has_won = random.randint(1, 100) <= config.misc.win_chance * 100 and total_winners < config.misc.max_winners
     if has_won:
         await user.update(has_won=True).apply()
-        await send_to_admins(call.bot, f"{hlink('Пользователь', f'tg://user?id={user.id}')} выиграл\n@{user.username} {user.first_name} {user.last_name}")
+        text = f"""
+{hlink('Пользователь', f'tg://user?id={user.id}')} выиграл
+@{user.username} {user.first_name} {user.last_name}
+"""
+        await send_to_admins(call.bot, text)
 
     for _ in range(config.misc.spins_count - 1):
         await _randomize_message(call, user, config)
@@ -34,13 +38,23 @@ async def _start_lottery(call: types.CallbackQuery, user: UserTG, state: FSMCont
     await user.update(attempts=user.attempts + 1).apply()
 
     if has_won:
-        await user.send_message("Поздравляем! Ты сорвал джекпот. Скоро с тобой свяжут, чтобы ты забрал свой заветный приз")
+        text = """
+Поздравляем! Ты сорвал джекпот.
+Скоро с тобой свяжут, чтобы ты забрал свой заветный приз
+"""
+        await user.send_message(text)
     elif user.attempts >= config.misc.total_attempts:
         await user.send_sticker(config.misc.sad_sticker)
-        await user.send_message("Не расстраивайся, солнце! Не повезло в игре, повезет в любви\nДержи котика")
+        text = """
+Не расстраивайся, солнце! Не повезло в игре, повезет в любви
+Держи котика
+"""
+        await user.send_message(text)
         await user.send_sticker(config.misc.sad_sticker2)
     else:
-        await user.send_message("Упс! Попробуй еще раз", reply_markup=play.keyboard(user_attempts=user.attempts, total_attempts=config.misc.total_attempts))
+        await user.send_message("Упс! Попробуй еще раз",
+                                reply_markup=play.keyboard(user_attempts=user.attempts,
+                                                           total_attempts=config.misc.total_attempts))
 
     await state.finish()
 
@@ -48,8 +62,8 @@ async def _start_lottery(call: types.CallbackQuery, user: UserTG, state: FSMCont
 async def _randomize_message(call: types.CallbackQuery, user: UserTG, config: Config) -> None:
     row = ""
     for _ in range(config.misc.row_length):
-            row += random.choice(config.misc.icons)
-    
+        row += random.choice(config.misc.icons)
+
     try:
         await user.edit_message_text(row, message_id=call.message.message_id)
     except MessageNotModified:
@@ -65,10 +79,10 @@ async def _stop_lottery(call: types.CallbackQuery, user: UserTG, config: Config,
             row = ""
             for _ in range(config.misc.row_length):
                 row += random.choice(config.misc.icons)
-            
+
             if row.count(row[0]) != config.misc.row_length:
                 break
-    
+
     try:
         await user.edit_message_text(row, message_id=call.message.message_id)
     except MessageNotModified:

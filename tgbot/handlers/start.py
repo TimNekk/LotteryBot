@@ -10,7 +10,7 @@ from tgbot.config import Config
 async def start(message: types.Message, user: UserTG, config: Config) -> None:
     if user.attempts >= config.misc.total_attempts or user.has_won:
         return
-    
+
     text = f"""
 Добро пожаловать в <b>Барное казино</b>{f', {user.info}' if user.info else ''}.
 
@@ -19,8 +19,9 @@ async def start(message: types.Message, user: UserTG, config: Config) -> None:
 """
 
     await user.send_message(text,
-                            reply_markup=play.keyboard(user_attempts=user.attempts, total_attempts=config.misc.total_attempts))
-    
+                            reply_markup=play.keyboard(user_attempts=user.attempts,
+                                                       total_attempts=config.misc.total_attempts))
+
 
 async def sticker(message: types.Message, user: UserTG, config: Config) -> None:
     await user.send_message(message.sticker.file_id)
