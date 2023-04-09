@@ -68,6 +68,7 @@ class LogConfig:
 class Miscellaneous:
     total_attempts: int
     win_chance: float
+    happy_sticker: str
     sad_sticker: str
     sad_sticker2: str
     max_winners: int
@@ -122,6 +123,7 @@ def load_config(path: str | None = None) -> Config:
         misc=Miscellaneous(
             total_attempts=env.int('TOTAL_ATTEMPTS'),
             win_chance=env.float('WIN_CHANCE'),
+            happy_sticker=env.str('HAPPY_STICKER'),
             sad_sticker=env.str('SAD_STICKER'),
             sad_sticker2=env.str('SAD_STICKER2'),
             max_winners=env.int('MAX_WINNERS'),
