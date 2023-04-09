@@ -45,11 +45,11 @@ async def _start_lottery(call: types.CallbackQuery, user: UserTG, state: FSMCont
 Тебе скоро напишут, чтобы вручить приз 🤗
 """
         await user.send_message(text)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(1)
         await user.send_sticker(config.misc.happy_sticker)
     elif user.attempts >= config.misc.total_attempts:
         await user.send_sticker(config.misc.sad_sticker)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(1)
         text = """
 К сожалению, попытки закончились ☹️
 Не расстраивайся, солнце! Видимо, удача встала не стой ноги сегодня 🤷‍♂️
@@ -59,7 +59,7 @@ async def _start_lottery(call: types.CallbackQuery, user: UserTG, state: FSMCont
 Держи котика для хорошего настроения 😺
 """
         await user.send_message(text)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(1)
         await user.send_sticker(config.misc.sad_sticker2)
     else:
         await user.send_message("Упс! Попробуй еще раз",
